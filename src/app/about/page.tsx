@@ -1,4 +1,4 @@
-import { BrandMark } from "@/components/BrandMark";
+import Image from "next/image";
 import { Reveal } from "@/components/Reveal";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PageHeader } from "@/components/PageHeader";
@@ -36,14 +36,14 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About"
         title={site.legalName}
-        lede="A development and design studio that ships its own products and takes on client work with the same standard of craft."
+        lede="A one-person development and design studio. I build my own products and take on client work — and the person you talk to is the person who ships it."
       />
 
       <section className="section-pad">
         <div className="container-page grid gap-14 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-20">
           <Reveal>
             <div className="md:sticky md:top-28">
-              <SectionHead eyebrow="How we work" title="Principles" />
+              <SectionHead eyebrow="How I work" title="Principles" />
             </div>
           </Reveal>
 
@@ -66,12 +66,13 @@ export default function AboutPage() {
             <div className="md:sticky md:top-28">
               <SectionHead eyebrow="Who’s behind it" title="Founder" />
               <div className="mt-8 flex items-center gap-4">
-                <span
-                  className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-line bg-ink-2"
-                  aria-hidden
-                >
-                  <BrandMark size={28} className="h-6 w-6" />
-                </span>
+                <Image
+                  src="/founder-daniel.webp"
+                  alt={site.founder}
+                  width={80}
+                  height={80}
+                  className="h-16 w-16 shrink-0 rounded-full object-cover ring-1 ring-line"
+                />
                 <span>
                   <span className="display block text-lg text-paper">{site.founder}</span>
                   <span className="mono block text-paper-faint">
@@ -126,7 +127,7 @@ export default function AboutPage() {
       <section className="section-pad border-t border-line-soft bg-ink-2/30">
         <div className="container-page grid gap-12 md:grid-cols-2 md:gap-16">
           <Reveal>
-            <SectionHead eyebrow="What we build" title="Apps, websites, and digital products" />
+            <SectionHead eyebrow="What I build" title="Apps, websites, and digital products" />
             <p className="lede mt-6">
               From early concept through production. Studio products like FiHaven and Lgenia sit
               alongside client engagements under the {site.legalName} umbrella.
@@ -134,13 +135,13 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <SectionHead eyebrow="Who it’s for" title="Teams who want one accountable partner" />
+            <SectionHead eyebrow="Who it’s for" title="One accountable person, not a chain of handoffs" />
             <p className="lede mt-6">
-              Founders and teams who want a studio that can own both the product surface and the
+              Founders and teams who want one person owning both the product surface and the
               implementation — without the translation loss of split agencies.
             </p>
             <div className="mt-8">
-              <ButtonLink href="/contact">Work with us</ButtonLink>
+              <ButtonLink href="/contact">Work with me</ButtonLink>
             </div>
           </Reveal>
         </div>
