@@ -64,9 +64,9 @@ Deploys run from a maintainer's machine and are gated by a local build:
 npm run deploy
 ```
 
-Deploy configuration and secrets live in `deploy/.env.deploy`, which is not
-committed. First-time server, DNS, TLS, and mailbox setup is documented for
-maintainers in [`deploy/PROVISION.md`](deploy/PROVISION.md).
+Deploy configuration and secrets live in `deploy/.env.deploy`, and first-time
+server/DNS/TLS/mailbox setup in `deploy/PROVISION.md` — both kept out of version
+control. Contact the maintainer for provisioning details.
 
 ## License
 

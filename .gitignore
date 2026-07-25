@@ -53,3 +53,5 @@ AGENTS.md
 
 # Brand Assets
 /brand-assets
+# Local-only maintainer runbook (contains infra details)
+deploy/PROVISION.md
