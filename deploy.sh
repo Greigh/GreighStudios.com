@@ -105,5 +105,22 @@ else
 fi
 remote "pm2 status $APP_NAME" || true
 
+# --- 7. Purge Cloudflare edge cache (HTML is edge-cached; keep it fresh) -----
+if [ -n "${CLOUDFLARE_ZONE_ID:-}" ] && [ -n "${CLOUDFLARE_API_KEY:-}" ] && [ -n "${CLOUDFLARE_EMAIL:-}" ]; then
+  echo "→ Purging Cloudflare cache"
+  PURGE=$(curl -s -X POST \
+    "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
+    -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+    -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+    -H "Content-Type: application/json" \
+    --data '{"purge_everything":true}')
+  case "$PURGE" in
+    *'"success":true'*) echo "✅ Cache purged" ;;
+    *) echo "⚠️  Cache purge failed: $PURGE" ;;
+  esac
+else
+  echo "→ Skipping cache purge (Cloudflare vars not set)"
+fi
+
 echo ""
 echo "✅ Deploy complete — https://greighstudios.com  ($(date '+%Y-%m-%d %H:%M:%S'))"

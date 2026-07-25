@@ -38,10 +38,10 @@ export function SiteFooter() {
 
           <div>
             <p className="eyebrow">Navigate</p>
-            <ul className="mt-5 space-y-3 text-sm">
+            <ul className="mt-4 space-y-1 text-sm">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="link-quiet">
+                  <Link href={link.href} className="link-quiet inline-block py-1">
                     {link.label}
                   </Link>
                 </li>
@@ -51,19 +51,19 @@ export function SiteFooter() {
 
           <div>
             <p className="eyebrow">Studio</p>
-            <ul className="mt-5 space-y-3 text-sm">
+            <ul className="mt-4 space-y-1 text-sm">
               <li>
-                <a href={`mailto:${site.email}`} className="link-quiet">
+                <a href={`mailto:${site.email}`} className="link-quiet inline-block py-1">
                   {site.email}
                 </a>
               </li>
               <li>
-                <Link href="/privacy" className="link-quiet">
+                <Link href="/privacy" className="link-quiet inline-block py-1">
                   Privacy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="link-quiet">
+                <Link href="/terms" className="link-quiet inline-block py-1">
                   Terms
                 </Link>
               </li>

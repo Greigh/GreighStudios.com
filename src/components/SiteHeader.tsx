@@ -53,11 +53,11 @@ export function SiteHeader() {
                 }`}
               >
                 {link.label}
-                {/* Active state is a cell, not an underline — same vocabulary
-                    as the rest of the page. */}
+                {/* Active state: a small cell centered under the tab — same
+                    vocabulary as the rest of the page. */}
                 <span
-                  className={`absolute -bottom-1 left-0 h-0.75 w-0.75 bg-cyan transition-opacity duration-300 ${
-                    active ? "opacity-100" : "opacity-0"
+                  className={`absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 bg-cyan transition-all duration-300 ${
+                    active ? "scale-100 opacity-100" : "scale-0 opacity-0"
                   }`}
                   aria-hidden
                 />

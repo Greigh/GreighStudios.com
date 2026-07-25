@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -68,6 +68,13 @@ export const metadata: Metadata = {
     apple: "/brand/apple-touch-icon.png",
   },
   applicationName: site.name,
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0b0e12",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

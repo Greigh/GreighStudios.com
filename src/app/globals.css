@@ -338,7 +338,8 @@
     border: 1px solid var(--line-soft);
     border-radius: 3px;
     padding: 0.75rem 0.9rem;
-    font-size: 0.9375rem;
+    /* 16px so iOS Safari doesn't auto-zoom the viewport on focus. */
+    font-size: 1rem;
     color: var(--paper);
     outline: none;
     transition:
