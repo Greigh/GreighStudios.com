@@ -2,7 +2,7 @@
   "name": "greigh-studios",
   "version": "0.1.0",
   "private": true,
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "SEE LICENSE FILE",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -31,10 +31,9 @@
     "@types/react-dom": "^19.2.3",
     "prettier": "^3.9.6",
     "tailwindcss": "^4.3.3",
-    "typescript": "6.0.3"
+    "typescript": "^7.0.2"
   },
   "allowScripts": {
-    "sharp@0.34.5": true,
     "sharp@0.35.3": true,
     "unrs-resolver@1.12.2": true
   },

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/JsonLd";
 import { MdxContent } from "@/components/MdxContent";
 import { ButtonLink } from "@/components/ButtonLink";
 import { DissolveField } from "@/components/DissolveField";
@@ -8,6 +9,7 @@ import { WorkCard } from "@/components/WorkCard";
 import { Reveal } from "@/components/Reveal";
 import { getAllWork, getWorkBySlug } from "@/lib/mdx";
 import { createMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -29,6 +31,8 @@ export async function generateMetadata({ params }: Props) {
     title: work.meta.title,
     description: work.meta.summary,
     path: `/work/${slug}`,
+    image: work.meta.image ?? site.ogImage,
+    type: "article",
   });
 }
 
@@ -40,8 +44,21 @@ export default async function WorkDetailPage({ params }: Props) {
   const { meta } = work;
   const others = getAllWork().filter((item) => item.slug !== slug);
 
+  const workSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: meta.title,
+    description: meta.summary,
+    url: `${site.url}/work/${slug}`,
+    ...(meta.image ? { image: `${site.url}${meta.image}` } : {}),
+    ...(meta.year ? { dateCreated: meta.year } : {}),
+    keywords: meta.tags.join(", "),
+    creator: { "@type": "Organization", name: site.name, url: site.url },
+  };
+
   return (
     <article>
+      <JsonLd data={workSchema} />
       <header className="relative isolate overflow-hidden border-b border-line-soft">
         <div
           className="pointer-events-none absolute inset-0 mask-[linear-gradient(to_right,transparent_25%,black_80%)]"

@@ -1,10 +1,38 @@
 import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { JsonLd } from "@/components/JsonLd";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { createMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.css";
+
+const orgSchema = {
+  "@type": "Organization",
+  "@id": `${site.url}/#organization`,
+  name: site.name,
+  legalName: site.legalName,
+  url: site.url,
+  logo: `${site.url}/brand/mark.png`,
+  image: `${site.url}${site.ogImage}`,
+  description: site.description,
+  email: site.email,
+  founder: { "@type": "Person", name: site.founder },
+  sameAs: [...site.sameAs],
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: site.email,
+    contactType: "customer support",
+  },
+};
+
+const siteSchema = {
+  "@type": "WebSite",
+  "@id": `${site.url}/#website`,
+  name: site.name,
+  url: site.url,
+  publisher: { "@id": `${site.url}/#organization` },
+};
 
 /* Display voice. The `wdth` axis is loaded so headlines can be set slightly
    expanded — it gives the type a built quality that a fixed grotesque can't. */
@@ -54,6 +82,7 @@ export default function RootLayout({
       className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-ink font-sans text-paper">
+        <JsonLd data={{ "@context": "https://schema.org", "@graph": [orgSchema, siteSchema] }} />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-cyan focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[#06131a]"
