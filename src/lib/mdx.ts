@@ -10,6 +10,7 @@ export type WorkMeta = {
   year: string;
   status: "live" | "in-progress" | "archived";
   url?: string;
+  image?: string;
   tags: string[];
   featured?: boolean;
 };
@@ -39,6 +40,7 @@ export function getAllWork(): WorkMeta[] {
       year: String(data.year ?? ""),
       status: (data.status as WorkMeta["status"]) ?? "live",
       url: data.url ? String(data.url) : undefined,
+      image: data.image ? String(data.image) : undefined,
       tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
       featured: Boolean(data.featured),
     }))
@@ -65,6 +67,7 @@ export function getWorkBySlug(slug: string) {
       year: String(data.year ?? ""),
       status: (data.status as WorkMeta["status"]) ?? "live",
       url: data.url ? String(data.url) : undefined,
+      image: data.image ? String(data.image) : undefined,
       tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
       featured: Boolean(data.featured),
     } satisfies WorkMeta,

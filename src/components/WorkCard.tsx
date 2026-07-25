@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BrandMark } from "./BrandMark";
 import { DissolveField } from "./DissolveField";
@@ -30,34 +31,52 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
 
   return (
     <Link href={`/work/${item.slug}`} className="card group flex flex-col rounded-sm">
-      {/* Title plate. No screenshot is invented here — the year is real data,
-          set large, and the dissolve does the rest. */}
+      {/* Plate: a real product screenshot when we have one, otherwise the
+          dissolve motif so future entries still look intentional. */}
       <div className="relative h-40 overflow-hidden border-b border-line-soft md:h-48">
-        <div className="cell-texture absolute inset-0 opacity-25" aria-hidden />
-        <div className="absolute inset-0" aria-hidden>
-          <DissolveField focus={focus} cell={4} gap={11} intensity={0.42} />
-        </div>
-        <div
-          className="absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_var(--fx)_var(--fy),var(--glow),transparent_70%)] opacity-60 transition-opacity duration-500 group-hover:opacity-100"
-          style={
-            {
-              "--fx": `${focus.x * 100}%`,
-              "--fy": `${focus.y * 100}%`,
-            } as React.CSSProperties
-          }
-          aria-hidden
-        />
-
-        <span
-          className="display pointer-events-none absolute -bottom-4 left-5 text-[6.5rem] leading-none text-paper opacity-[0.075] md:text-[8rem]"
-          aria-hidden
-        >
-          {item.year}
-        </span>
+        {item.image ? (
+          <>
+            <Image
+              src={item.image}
+              alt={`${item.title} — screenshot`}
+              fill
+              sizes="(max-width: 768px) 100vw, 600px"
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+            />
+            {/* Bottom scrim so the mark reads and the plate seats into the card. */}
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/10"
+              aria-hidden
+            />
+          </>
+        ) : (
+          <>
+            <div className="cell-texture absolute inset-0 opacity-25" aria-hidden />
+            <div className="absolute inset-0" aria-hidden>
+              <DissolveField focus={focus} cell={4} gap={11} intensity={0.42} />
+            </div>
+            <div
+              className="absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_var(--fx)_var(--fy),var(--glow),transparent_70%)] opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+              style={
+                {
+                  "--fx": `${focus.x * 100}%`,
+                  "--fy": `${focus.y * 100}%`,
+                } as React.CSSProperties
+              }
+              aria-hidden
+            />
+            <span
+              className="display pointer-events-none absolute -bottom-4 left-5 text-[6.5rem] leading-none text-paper opacity-[0.075] md:text-[8rem]"
+              aria-hidden
+            >
+              {item.year}
+            </span>
+          </>
+        )}
 
         <BrandMark
           size={64}
-          className="absolute right-4 top-4 h-8 w-8 opacity-25 transition-opacity duration-500 group-hover:opacity-60"
+          className="absolute right-4 top-4 h-8 w-8 opacity-70 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] transition-opacity duration-500 group-hover:opacity-100"
         />
       </div>
 

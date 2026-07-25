@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MdxContent } from "@/components/MdxContent";
@@ -102,6 +103,26 @@ export default async function WorkDetailPage({ params }: Props) {
           ) : null}
         </div>
       </header>
+
+      {meta.image ? (
+        <div className="container-page relative -mt-2">
+          <div className="relative overflow-hidden rounded-md border border-line-soft bg-ink-2">
+            <div
+              className="pointer-events-none absolute -inset-x-10 -top-24 h-40 bg-[radial-gradient(ellipse_50%_100%_at_50%_0%,var(--glow),transparent_70%)]"
+              aria-hidden
+            />
+            <Image
+              src={meta.image}
+              alt={`${meta.title} — screenshot`}
+              width={1600}
+              height={900}
+              priority
+              sizes="(max-width: 1200px) 100vw, 1160px"
+              className="relative block h-auto w-full"
+            />
+          </div>
+        </div>
+      ) : null}
 
       {/* Measure is capped for reading, but the column stays flush with the
           masthead above it rather than re-centring. */}
