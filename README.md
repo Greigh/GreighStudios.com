@@ -1,11 +1,15 @@
 # Greigh Studios
 
-Marketing site for **Greigh Studios LLC** — product studio and client partner for development and design.
+The marketing website for **Greigh Studios LLC** — a development and design
+studio building its own products and partnering on client work.
 
-- Domain: [greighstudios.com](https://greighstudios.com)
-- Stack: Next.js 16, Tailwind CSS v4, GSAP, MDX, Nodemailer (VPS SMTP)
+- **Live:** [greighstudios.com](https://greighstudios.com)
+- **License:** Source available — see [License](#license) below
+- **Built with:** Next.js 16 (App Router), Tailwind CSS v4, GSAP, and MDX
 
-## Develop
+## Getting started
+
+Requires Node 22+ and npm.
 
 ```bash
 cp .env.example .env.local
@@ -13,50 +17,64 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+The site runs at [http://localhost:3000](http://localhost:3000).
 
-```bash
-npm run format     # Prettier write
-npm run lint       # Prettier check
-npm run typecheck  # TypeScript 6 (`tsc --noEmit`)
-```
+### Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run start` | Serve the production build |
+| `npm run typecheck` | Type-check with `tsc --noEmit` |
+| `npm run lint` | Check formatting (Prettier) |
+| `npm run format` | Apply formatting (Prettier) |
+
+## Structure
+
+| Path | Contents |
+| --- | --- |
+| `src/app` | Routes (App Router) and API routes |
+| `src/components` | UI components |
+| `src/lib` | Site config, MDX, and SEO helpers |
+| `content/work` | Case studies (MDX) |
+| `public` | Static assets |
 
 ## Contact form
 
-The `/api/contact` route sends over SMTP through the VPS mail server
-(`hello@greighstudios.com`). Configure in `.env.local` (dev) or
-`.env.production` (server):
+The `/api/contact` route sends email over SMTP via Nodemailer. Configure it with
+environment variables — see [`.env.example`](.env.example):
 
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`
 - `CONTACT_TO`, `CONTACT_FROM`
 
-See `.env.example`. With no SMTP config the form returns a graceful "email us"
-message instead of throwing.
+With no SMTP configured, the form returns a graceful "email us" message rather
+than erroring.
 
 ## Content
 
-- Case studies: `content/work/*.mdx`
+Case studies live in `content/work/*.mdx` — front matter (title, summary,
+category, year, status, tags, image) plus an MDX body.
+
+## Deployment
+
+Deploys run from a maintainer's machine and are gated by a local build:
+
+```bash
+npm run deploy
+```
+
+Deploy configuration and secrets live in `deploy/.env.deploy`, which is not
+committed. First-time server, DNS, TLS, and mailbox setup is documented for
+maintainers in [`deploy/PROVISION.md`](deploy/PROVISION.md).
 
 ## License
 
-Greigh Studios Source Available License v1.0 — see [LICENSE](LICENSE). Source
-available, not open source: the code may be viewed and run locally; the brand,
-copy, and case-study content are proprietary. Project-specific terms are in
-Schedule A of the license. Questions: hello@greighstudios.com.
+**Greigh Studios Source Available License v1.0** — see [LICENSE](LICENSE).
 
-## Deploy
+This project is source available, **not open source**. You may view and study
+the code and run it locally, but you may not republish it as your own site or
+reuse the Greigh Studios brand, copy, or case-study content. Project-specific
+terms are in Schedule A of the license.
 
-Repeatable app deploy from your machine (build gate → rsync → server build →
-PM2 reload):
-
-```bash
-npm run deploy          # runs ./deploy.sh, reads deploy/.env.deploy
-```
-
-First-time server + DNS + mailbox setup is a one-time runbook:
-[`deploy/PROVISION.md`](deploy/PROVISION.md).
-
-- Host: Hostinger VPS `ORIGIN_IP_REDACTED`, shared with danielhipskind.com / fihaven.app
-- PM2 app: `greigh-studios` on port `3010`
-- Nginx: `deploy/nginx.greighstudios.com.conf`
-- Mail: `hello@greighstudios.com` on the shared Postfix/Dovecot stack
+For commercial or reuse permission: **hello@greighstudios.com**.
