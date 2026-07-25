@@ -39,9 +39,10 @@ message instead of throwing.
 
 ## License
 
-Source available, not open source — see [LICENSE](LICENSE). The code may be
-viewed and run locally; the brand, copy, and case-study content are proprietary.
-Questions: hello@greighstudios.com.
+Greigh Studios Source Available License v1.0 — see [LICENSE](LICENSE). Source
+available, not open source: the code may be viewed and run locally; the brand,
+copy, and case-study content are proprietary. Project-specific terms are in
+Schedule A of the license. Questions: hello@greighstudios.com.
 
 ## Deploy
 
