@@ -45,7 +45,7 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
             />
             {/* Bottom scrim so the mark reads and the plate seats into the card. */}
             <div
-              className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/10"
+              className="absolute inset-0 bg-linear-to-t from-ink/70 via-transparent to-ink/10"
               aria-hidden
             />
           </>
@@ -101,7 +101,7 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
 
         <div className="mt-6 flex items-end justify-between gap-4">
           <div className="flex flex-wrap gap-1.5">
-            {item.tags.slice(0, 3).map((tag) => (
+            {item.tags.map((tag) => (
               <span key={tag} className="tag">
                 {tag}
               </span>
