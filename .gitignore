@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+.vscode
 
 # debug
 npm-debug.log*
@@ -32,6 +33,11 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# deploy + mail secrets (never commit)
+deploy/.env.deploy
+mail-server-logins.md
 
 # vercel
 .vercel
@@ -39,3 +45,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI Helpers
+.claude
+CLAUDE.md
+AGENTS.md
+
+# Brand Assets
+/brand-assets

@@ -1,26 +1,459 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Greigh Studios — design tokens
+   The palette is a cool blue-graphite ramp rather than neutral black, so the
+   brand cyan reads as native light in the scene instead of a pasted accent.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces — three distinct levels, cool-shifted */
+  --ink: #0b0e12;
+  --ink-2: #111722;
+  --ink-3: #18202d;
+
+  /* Lines */
+  --line: #223046;
+  --line-soft: #1a2433;
+
+  /* Brand */
+  --cyan: #50b7e1;
+  --cyan-hi: #8ed9f5;
+  --cyan-deep: #2a7fa5;
+  --violet: #5b4bd4; /* ambient glow only — never a UI accent */
+
+  /* Text */
+  /* Three text levels, all AA against --ink at small sizes
+     (≈16:1, 7.4:1, 5.0:1). */
+  --paper: #e9eef5;
+  --paper-dim: #93a1b5;
+  --paper-faint: #74829a;
+
+  /* Derived */
+  --cyan-soft: color-mix(in srgb, var(--cyan) 16%, transparent);
+  --cyan-line: color-mix(in srgb, var(--cyan) 42%, transparent);
+  --glow: color-mix(in srgb, var(--cyan) 20%, transparent);
+  --glow-violet: color-mix(in srgb, var(--violet) 18%, transparent);
+
+  /* Type */
+  --step--1: clamp(0.8125rem, 0.79rem + 0.11vw, 0.875rem);
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.125rem, 1.06rem + 0.32vw, 1.3125rem);
+  --step-2: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);
+  --step-3: clamp(1.875rem, 1.6rem + 1.4vw, 2.75rem);
+  --step-4: clamp(2.25rem, 1.8rem + 2.25vw, 3.75rem);
+  --step-5: clamp(2.75rem, 1.9rem + 4.2vw, 6rem);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-cyan: var(--cyan);
+  --color-cyan-hi: var(--cyan-hi);
+  --color-cyan-deep: var(--cyan-deep);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-paper-faint: var(--paper-faint);
+
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* These MUST stay in @layer base. Unlayered rules outrank every cascade layer,
+   so an unlayered `a { color: inherit }` silently beats .btn-primary's colour
+   and turns every link-button into white-on-cyan. */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-plex-sans), system-ui, sans-serif;
+    font-size: var(--step-0);
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--cyan) 30%, transparent);
+    color: var(--paper);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   Layout, typography, and the dissolve.
+   All layered so Tailwind utilities can still override them at call sites.
+   ========================================================================== */
+
+@layer components {
+  .container-page {
+    width: min(1200px, calc(100% - 2.5rem));
+    margin-inline: auto;
+  }
+
+  .section-pad {
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  /* --- Typography --- */
+
+  .display {
+    font-family: var(--font-archivo), sans-serif;
+    font-weight: 700;
+    font-variation-settings: "wdth" 112;
+    letter-spacing: -0.028em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .display-xl {
+    font-size: var(--step-5);
+  }
+  .display-lg {
+    font-size: var(--step-4);
+  }
+  .display-md {
+    font-size: var(--step-3);
+  }
+  .display-sm {
+    font-size: var(--step-2);
+  }
+
+  /* Utility / data voice — mono, used for labels, years, statuses */
+  .eyebrow {
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+  }
+
+  .mono {
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .lede {
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--paper-dim);
+    text-wrap: pretty;
+    max-width: 56ch;
+  }
+
+  /* The one place the accent touches display type */
+  .accent-word {
+    color: var(--cyan-hi);
+    font-variation-settings: "wdth" 112;
+  }
+
+  /* --- The dissolve ---
+     This page's signature, derived from the studio mark, whose right edge
+     breaks from solid geometry into scattered pixels. Used in exactly three
+     places: the hero field, the section rules, and work-card hover. */
+
+  /* A hairline that pixelates as it travels right */
+  .rule-dissolve {
+    height: 1px;
+    border: 0;
+    margin: 0;
+    background:
+      linear-gradient(to right, var(--line) 0 38%, transparent 62%),
+      repeating-linear-gradient(to right, var(--line) 0 3px, transparent 3px 6px);
+    background-repeat: no-repeat, no-repeat;
+    background-size:
+      100% 100%,
+      100% 100%;
+    mask-image: linear-gradient(
+      to right,
+      #000 0 55%,
+      color-mix(in srgb, #000 35%, transparent) 100%
+    );
+  }
+
+  /* Square-cell texture; per-cell scatter comes from the canvas on top */
+  .cell-texture {
+    background-image:
+      linear-gradient(to right, var(--line-soft) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+}
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+
+@layer components {
+  .surface {
+    background: linear-gradient(180deg, var(--ink-2), var(--ink));
+    border: 1px solid var(--line-soft);
+  }
+
+  /* Card with a hairline top highlight — reads as a lit edge, gives depth
+     that a flat 1px border on flat black cannot. */
+  .card {
+    position: relative;
+    background: linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%);
+    border: 1px solid var(--line-soft);
+    transition:
+      border-color 0.35s ease,
+      transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1),
+      box-shadow 0.35s ease;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in srgb, var(--cyan) 30%, transparent) 30%,
+      color-mix(in srgb, var(--cyan) 8%, transparent) 70%,
+      transparent
+    );
+    opacity: 0.7;
+    transition: opacity 0.35s ease;
+  }
+
+  .card:hover {
+    border-color: color-mix(in srgb, var(--cyan) 34%, var(--line));
+    transform: translateY(-3px);
+    box-shadow:
+      0 1px 0 0 color-mix(in srgb, var(--cyan) 10%, transparent) inset,
+      0 18px 50px -24px color-mix(in srgb, var(--cyan) 40%, transparent);
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.35rem;
+    font-family: var(--font-plex-sans), sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    transition:
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease,
+      box-shadow 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .btn-primary {
+    background: var(--cyan);
+    color: #06131a;
+    box-shadow: 0 10px 30px -14px color-mix(in srgb, var(--cyan) 80%, transparent);
+  }
+
+  .btn-primary:hover {
+    background: var(--cyan-hi);
+    box-shadow: 0 14px 36px -14px color-mix(in srgb, var(--cyan) 95%, transparent);
+  }
+
+  .btn-ghost {
+    border-color: var(--line);
+    color: var(--paper);
+    background: color-mix(in srgb, var(--ink-2) 60%, transparent);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--cyan-line);
+    color: var(--cyan-hi);
+  }
+
+  /* Arrow that advances on hover — used on links and buttons */
+  .arrow {
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  .group:hover .arrow,
+  a:hover > .arrow,
+  button:hover > .arrow {
+    transform: translateX(3px);
+  }
+
+  .link-quiet {
+    color: var(--paper-dim);
+    transition: color 0.2s ease;
+  }
+
+  .link-quiet:hover {
+    color: var(--cyan-hi);
+  }
+
+  .tag {
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    border: 1px solid var(--line-soft);
+    background: color-mix(in srgb, var(--ink-3) 50%, transparent);
+    padding: 0.3rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  .field {
+    width: 100%;
+    background: var(--ink);
+    border: 1px solid var(--line-soft);
+    border-radius: 3px;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.9375rem;
+    color: var(--paper);
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .field::placeholder {
+    color: var(--paper-faint);
+  }
+
+  .field:focus {
+    border-color: var(--cyan-line);
+    background: var(--ink-2);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 12%, transparent);
+  }
+}
+
+/* ==========================================================================
+   Long-form prose (MDX case studies)
+   ========================================================================== */
+
+@layer components {
+  .prose-gs {
+    color: var(--paper-dim);
+    font-size: var(--step-0);
+    line-height: 1.75;
+  }
+
+  .prose-gs h2,
+  .prose-gs h3 {
+    font-family: var(--font-archivo), sans-serif;
+    font-weight: 700;
+    font-variation-settings: "wdth" 112;
+    color: var(--paper);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-top: 2.5rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .prose-gs h2 {
+    font-size: var(--step-2);
+  }
+
+  .prose-gs h3 {
+    font-size: var(--step-1);
+  }
+
+  .prose-gs > :first-child {
+    margin-top: 0;
+  }
+
+  .prose-gs p,
+  .prose-gs ul {
+    margin-bottom: 1.15rem;
+  }
+
+  .prose-gs a {
+    color: var(--cyan-hi);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--cyan-line);
+  }
+
+  .prose-gs ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .prose-gs li {
+    position: relative;
+    padding-left: 1.4rem;
+    margin-bottom: 0.6rem;
+  }
+
+  /* Bullets echo the cell motif */
+  .prose-gs li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 5px;
+    height: 5px;
+    background: var(--cyan);
+    opacity: 0.75;
+  }
+
+  .prose-gs strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+}
+
+/* ==========================================================================
+   Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card:hover {
+    transform: none;
+  }
 }

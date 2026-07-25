@@ -1,0 +1,11 @@
+.next
+out
+build
+node_modules
+package-lock.json
+*.md
+*.sh
+*.conf
+content/**/*.mdx
+public/brand/**
+.firecrawl-ts7.md

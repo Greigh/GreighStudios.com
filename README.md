@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Greigh Studios
 
-## Getting Started
+Marketing site for **Greigh Studios LLC** — product studio and client partner for development and design.
 
-First, run the development server:
+- Domain: [greighstudios.com](https://greighstudios.com)
+- Stack: Next.js 16, Tailwind CSS v4, GSAP, MDX, Nodemailer (VPS SMTP)
+
+## Develop
 
 ```bash
+cp .env.example .env.local
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run format     # Prettier write
+npm run lint       # Prettier check
+npm run typecheck  # TypeScript 6 (`tsc --noEmit`)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contact form
 
-## Learn More
+The `/api/contact` route sends over SMTP through the VPS mail server
+(`hello@greighstudios.com`). Configure in `.env.local` (dev) or
+`.env.production` (server):
 
-To learn more about Next.js, take a look at the following resources:
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`
+- `CONTACT_TO`, `CONTACT_FROM`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See `.env.example`. With no SMTP config the form returns a graceful "email us"
+message instead of throwing.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content
 
-## Deploy on Vercel
+- Case studies: `content/work/*.mdx`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Repeatable app deploy from your machine (build gate → rsync → server build →
+PM2 reload):
+
+```bash
+npm run deploy          # runs ./deploy.sh, reads deploy/.env.deploy
+```
+
+First-time server + DNS + mailbox setup is a one-time runbook:
+[`deploy/PROVISION.md`](deploy/PROVISION.md).
+
+- Host: Hostinger VPS `ORIGIN_IP_REDACTED`, shared with danielhipskind.com / fihaven.app
+- PM2 app: `greigh-studios` on port `3010`
+- Nginx: `deploy/nginx.greighstudios.com.conf`
+- Mail: `hello@greighstudios.com` on the shared Postfix/Dovecot stack
