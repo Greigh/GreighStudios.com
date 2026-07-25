@@ -37,6 +37,12 @@ message instead of throwing.
 
 - Case studies: `content/work/*.mdx`
 
+## License
+
+Source available, not open source — see [LICENSE](LICENSE). The code may be
+viewed and run locally; the brand, copy, and case-study content are proprietary.
+Questions: hello@greighstudios.com.
+
 ## Deploy
 
 Repeatable app deploy from your machine (build gate → rsync → server build →

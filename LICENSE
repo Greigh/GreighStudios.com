@@ -1,0 +1,116 @@
+Greigh Studios Source Available License
+Version 1.0, July 2026
+
+Copyright (c) 2026 Greigh Studios LLC. All rights reserved.
+
+This license governs the source code for the Greigh Studios website
+published at https://github.com/Greigh/GreighStudios.com (the
+"Software"). The Software is **source available**, not open source.
+Using the hosted website at https://greighstudios.com is governed
+separately by its Terms of Use.
+
+────────────────────────────────────────────────────────────────
+1. Definitions
+────────────────────────────────────────────────────────────────
+
+"Service" means the Greigh Studios website and any related APIs
+operated by the copyright holder.
+
+"Content" means the non-code material in the Software, including
+copy, case studies, photographs, screenshots, illustrations, the
+Greigh Studios name, logo, and brand assets.
+
+"You" means the individual or legal entity exercising permissions
+granted by this license.
+
+"Production use" means making the Software, or a derivative of it,
+available to anyone other than yourself — including publishing it as
+a public website or operating a network service.
+
+────────────────────────────────────────────────────────────────
+2. Permissions
+────────────────────────────────────────────────────────────────
+
+You may, without a separate agreement:
+
+  (a) View and study the Software for personal, educational, or
+      security-research purposes.
+
+  (b) Run the Software locally on your own devices for personal
+      evaluation and development, provided it is not Production use.
+
+  (c) Reuse small, generic code portions (for example, a utility
+      function or a configuration snippet) in your own projects,
+      provided you do not reproduce the site's overall design,
+      structure, or Content.
+
+  (d) Submit contributions (for example, pull requests) to the
+      official repository. By submitting a contribution, you grant
+      the copyright holder a perpetual, worldwide, royalty-free
+      license to use, modify, and distribute that contribution under
+      this license and any future license the project adopts.
+
+────────────────────────────────────────────────────────────────
+3. Restrictions
+────────────────────────────────────────────────────────────────
+
+Unless you have prior written permission from the copyright holder,
+you may not:
+
+  (a) Use the Software for Production use.
+
+  (b) Publish the Software, or a derivative, as your own website or
+      as the website of any other person or organization.
+
+  (c) Offer the Software, or a derivative, as a commercial product,
+      template, or theme, whether free or paid.
+
+  (d) Sublicense, sell, or redistribute the Software or substantial
+      portions of it, except as part of a contribution merged into
+      the official repository with the copyright holder's acceptance.
+
+  (e) Reproduce the site's distinctive look and feel in a way likely
+      to cause confusion about its source or to suggest affiliation
+      with Greigh Studios LLC.
+
+────────────────────────────────────────────────────────────────
+4. Brand assets and content
+────────────────────────────────────────────────────────────────
+
+The Content is proprietary and is NOT licensed for reuse under this
+license. The permissions in Section 2 apply to the source code only.
+
+In particular, the Greigh Studios name, logo, and mark, the written
+copy, and the case-study material and imagery (including third-party
+client work shown as examples) may not be copied, redistributed, or
+used to represent yourself or any other party. This license grants no
+right to use the Greigh Studios name, logo, or branding in a way that
+suggests endorsement or affiliation.
+
+────────────────────────────────────────────────────────────────
+5. Third-party components
+────────────────────────────────────────────────────────────────
+
+The Software includes third-party libraries and assets under their
+own licenses — for example Next.js and React (MIT), the IBM Plex and
+Archivo typefaces (SIL OFL 1.1), and GSAP (under the GreenSock
+standard license). Those components remain governed by their
+respective licenses.
+
+────────────────────────────────────────────────────────────────
+6. Disclaimer
+────────────────────────────────────────────────────────────────
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE
+FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM USE OF THE
+SOFTWARE.
+
+────────────────────────────────────────────────────────────────
+7. Contact
+────────────────────────────────────────────────────────────────
+
+For commercial licensing, reuse permission, or other questions:
+hello@greighstudios.com
