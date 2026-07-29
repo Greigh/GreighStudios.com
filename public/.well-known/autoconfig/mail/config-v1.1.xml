@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Mozilla autoconfig for greighstudios.com (Thunderbird, K-9/FairEmail, and most
+  modern clients). Served at both:
+    https://greighstudios.com/.well-known/autoconfig/mail/config-v1.1.xml
+    https://autoconfig.greighstudios.com/mail/config-v1.1.xml   (nginx rewrite)
+  Settings mirror the client table in mail-server-logins.md. No secrets here —
+  %EMAILADDRESS% is substituted by the client at setup time.
+-->
+<clientConfig version="1.1">
+  <emailProvider id="greighstudios.com">
+    <domain>greighstudios.com</domain>
+    <displayName>Greigh Studios</displayName>
+    <displayShortName>Greigh Studios</displayShortName>
+
+    <incomingServer type="imap">
+      <hostname>mail.greighstudios.com</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </incomingServer>
+
+    <outgoingServer type="smtp">
+      <hostname>mail.greighstudios.com</hostname>
+      <port>465</port>
+      <socketType>SSL</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </outgoingServer>
+
+    <!-- Fallback for clients that prefer submission over STARTTLS. -->
+    <outgoingServer type="smtp">
+      <hostname>mail.greighstudios.com</hostname>
+      <port>587</port>
+      <socketType>STARTTLS</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </outgoingServer>
+
+    <documentation url="https://greighstudios.com/">
+      <descr lang="en">Greigh Studios mail — IMAP 993 (SSL), SMTP 465 (SSL). Username is your full email address.</descr>
+    </documentation>
+  </emailProvider>
+</clientConfig>
