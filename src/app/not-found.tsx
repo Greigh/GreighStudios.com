@@ -30,7 +30,7 @@ export default function NotFound() {
         </div>
         <p className="mt-10 text-sm text-paper-dim">
           Think something should be here?{" "}
-          <Link href="/contact" className="text-cyan-hi hover:underline">
+          <Link href="/contact" className="link-inline">
             Let us know
           </Link>
           .

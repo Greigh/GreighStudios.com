@@ -93,10 +93,18 @@ export function HomeHero() {
                 className="absolute -inset-16 bg-[radial-gradient(circle,var(--glow),transparent_65%)] blur-2xl"
                 aria-hidden
               />
+              {/* Decorative: this is the composition's light source, and the
+                  studio is already named by the header and the h1 beside it.
+                  A third "Greigh Studios" announcement mid-hero is noise. */}
+              {/* Rendered size is driven by the responsive classes, so `sizes`
+                  has to mirror them — otherwise phones download the 420px
+                  variant for a 128px slot. */}
               <BrandMark
                 size={420}
                 className="relative h-32 w-32 sm:h-44 sm:w-44 md:h-76 md:w-76 lg:h-88 lg:w-88"
+                sizes="(min-width: 1024px) 352px, (min-width: 768px) 304px, (min-width: 640px) 176px, 128px"
                 priority
+                decorative
               />
             </div>
           </div>

@@ -16,7 +16,7 @@ export function SiteFooter() {
         <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
-              <BrandMark size={44} className="h-9 w-9" />
+              <BrandMark size={44} className="h-9 w-9" decorative />
               <span className="display text-sm leading-none tracking-[0.14em] text-paper uppercase">
                 {site.name}
               </span>
@@ -36,8 +36,14 @@ export function SiteFooter() {
             </Link>
           </div>
 
-          <div>
-            <p className="eyebrow">Navigate</p>
+          {/* Each column is its own navigation landmark, named by the heading
+              that was already there visually — so "Navigate" and "Studio" show
+              up as distinct destinations in a landmark list instead of one
+              anonymous blob of footer links. */}
+          <nav aria-labelledby="footer-navigate-heading">
+            <h2 className="eyebrow" id="footer-navigate-heading">
+              Navigate
+            </h2>
             <ul className="mt-4 space-y-1 text-sm">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -47,10 +53,12 @@ export function SiteFooter() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div>
-            <p className="eyebrow">Studio</p>
+          <nav aria-labelledby="footer-studio-heading">
+            <h2 className="eyebrow" id="footer-studio-heading">
+              Studio
+            </h2>
             <ul className="mt-4 space-y-1 text-sm">
               <li>
                 <a href={`mailto:${site.email}`} className="link-quiet inline-block py-1">
@@ -68,7 +76,7 @@ export function SiteFooter() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
 
         <hr className="rule-dissolve mt-14" />

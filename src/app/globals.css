@@ -29,6 +29,11 @@
   --paper-dim: #93a1b5;
   --paper-faint: #74829a;
 
+  /* Error / invalid. Deliberately light rather than a saturated red so it
+     clears AA on --ink (≈9.5:1) at the small sizes field errors are set in. */
+  --danger: #ff9a9a;
+  --danger-line: #e06a6a;
+
   /* Derived */
   --cyan-soft: color-mix(in srgb, var(--cyan) 16%, transparent);
   --cyan-line: color-mix(in srgb, var(--cyan) 42%, transparent);
@@ -57,6 +62,7 @@
   --color-paper: var(--paper);
   --color-paper-dim: var(--paper-dim);
   --color-paper-faint: var(--paper-faint);
+  --color-danger: var(--danger);
 
   --font-display: var(--font-archivo);
   --font-sans: var(--font-plex-sans);
@@ -74,6 +80,13 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /* Native controls (the <select> menulist, scrollbars, autofill, focus
+       rings on form widgets) are painted by the platform and ignore author
+       background/color. Without this the project-type select rendered as a
+       light macOS widget in an otherwise dark form, and its invalid-state
+       border never showed. The <meta name="color-scheme"> tag alone does not
+       do this — the CSS property is what the UA paints from. */
+    color-scheme: dark;
   }
 
   body {
@@ -98,10 +111,23 @@
     text-decoration: none;
   }
 
+  /* --cyan-hi rather than --cyan: the ring has to clear 3:1 against whatever
+     it lands on, and the offset puts it on page ground in every case. */
   :focus-visible {
-    outline: 2px solid var(--cyan);
+    outline: 2px solid var(--cyan-hi);
     outline-offset: 3px;
-    border-radius: 2px;
+  }
+
+  /* The one surface the cyan ring would sit against is the primary button
+     itself, so that case flips to paper. */
+  .btn-primary:focus-visible {
+    outline-color: var(--paper);
+  }
+
+  /* Skip link and other programmatic focus targets (<main tabindex="-1">)
+     shouldn't paint a ring when they're only receiving focus in passing. */
+  [tabindex="-1"]:focus {
+    outline: none;
   }
 }
 
@@ -245,7 +271,11 @@
     transition: opacity 0.35s ease;
   }
 
-  .card:hover {
+  /* :focus-within matters now that the card is an <article> with the link on
+     its title — without it a keyboard user gets none of the lift a pointer
+     user gets when the same card is reached. */
+  .card:hover,
+  .card:focus-within {
     border-color: color-mix(in srgb, var(--cyan) 34%, var(--line));
     transform: translateY(-3px);
     box-shadow:
@@ -253,7 +283,8 @@
       0 18px 50px -24px color-mix(in srgb, var(--cyan) 40%, transparent);
   }
 
-  .card:hover::before {
+  .card:hover::before,
+  .card:focus-within::before {
     opacity: 1;
   }
 
@@ -316,8 +347,30 @@
     transition: color 0.2s ease;
   }
 
-  .link-quiet:hover {
+  .link-quiet:hover,
+  .link-quiet:focus-visible {
     color: var(--cyan-hi);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* A link sitting inside a sentence can't be signalled by colour alone
+     (WCAG 1.4.1), so these carry a persistent underline. Nav lists and
+     buttons are exempt — they're not embedded in running text. */
+  .link-inline {
+    color: var(--cyan-hi);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--cyan-line);
+    transition:
+      color 0.2s ease,
+      text-decoration-color 0.2s ease;
+  }
+
+  .link-inline:hover {
+    color: var(--paper);
+    text-decoration-color: currentColor;
   }
 
   .tag {
@@ -356,6 +409,51 @@
     border-color: var(--cyan-line);
     background: var(--ink-2);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 12%, transparent);
+  }
+
+  /* Invalid state is carried by border, an icon-free error message, and
+     aria-invalid — never by colour on its own. */
+  .field[aria-invalid="true"] {
+    border-color: var(--danger-line);
+  }
+
+  .field[aria-invalid="true"]:focus {
+    border-color: var(--danger-line);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger-line) 20%, transparent);
+  }
+
+  .field-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--danger);
+  }
+
+  .field-hint {
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--paper-faint);
+  }
+
+  /* aria-disabled rather than the disabled attribute, so the control keeps
+     its place in the tab order and can still announce why it's inert. */
+  .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
+  .btn[aria-disabled="true"]:hover {
+    background: var(--cyan);
+    box-shadow: 0 10px 30px -14px color-mix(in srgb, var(--cyan) 80%, transparent);
+  }
+
+  .required-mark {
+    color: var(--danger);
+    margin-left: 0.25rem;
   }
 }
 
@@ -456,5 +554,61 @@
 
   .card:hover {
     transform: none;
+  }
+
+  /* Motion is the whole point of the arrow, so under reduce it simply
+     doesn't travel rather than snapping to its end position. */
+  .group:hover .arrow,
+  a:hover > .arrow,
+  button:hover > .arrow {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   User contrast and colour preferences
+   ========================================================================== */
+
+/* Windows High Contrast / forced-colors strips author colours, which would
+   otherwise erase every hairline border and the focus ring along with them. */
+@media (forced-colors: active) {
+  .card,
+  .surface,
+  .field,
+  .tag,
+  .btn {
+    border: 1px solid CanvasText;
+  }
+
+  :focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  /* Decorative canvases and gradients carry no meaning; let them drop out
+     rather than fighting the forced palette. */
+  .cell-texture,
+  .rule-dissolve {
+    display: none;
+  }
+
+  .arrow {
+    forced-color-adjust: auto;
+  }
+}
+
+/* Lift the two quieter text levels onto the primary one and harden the
+   hairlines when the user has asked for more contrast. */
+@media (prefers-contrast: more) {
+  :root {
+    --paper-dim: #d3dbe6;
+    --paper-faint: #b9c4d2;
+    --line: #47597a;
+    --line-soft: #35455e;
+    --cyan-line: color-mix(in srgb, var(--cyan) 75%, transparent);
+  }
+
+  .prose-gs a {
+    text-decoration-color: currentColor;
   }
 }

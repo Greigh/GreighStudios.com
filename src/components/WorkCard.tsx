@@ -30,7 +30,11 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
 
   return (
-    <Link href={`/work/${item.slug}`} className="card group flex flex-col rounded-sm">
+    /* Only the title is the link. Wrapping the whole card made its accessible
+       name the entire card — category, status, summary and every tag read as
+       one run — and left no way to select the text inside it. The stretched
+       ::after keeps the full plate clickable for pointer users. */
+    <article className="card group relative isolate flex flex-col rounded-sm">
       {/* Plate: a real product screenshot when we have one, otherwise the
           dissolve motif so future entries still look intentional. */}
       <div className="relative h-40 overflow-hidden border-b border-line-soft md:h-48">
@@ -38,10 +42,12 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
           <>
             <Image
               src={item.image}
-              alt={`${item.title} — screenshot`}
+              // Decorative here: the title sits directly beneath it and the
+              // screenshot adds nothing the heading doesn't already say.
+              alt=""
               fill
               sizes="(max-width: 768px) 100vw, 600px"
-              className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03] group-focus-within:scale-[1.03]"
             />
             {/* Bottom scrim so the mark reads and the plate seats into the card. */}
             <div
@@ -56,7 +62,7 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
               <DissolveField focus={focus} cell={4} gap={11} intensity={0.42} />
             </div>
             <div
-              className="absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_var(--fx)_var(--fy),var(--glow),transparent_70%)] opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+              className="absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_var(--fx)_var(--fy),var(--glow),transparent_70%)] opacity-60 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100"
               style={
                 {
                   "--fx": `${focus.x * 100}%`,
@@ -76,7 +82,8 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
 
         <BrandMark
           size={64}
-          className="absolute right-4 top-4 h-8 w-8 opacity-70 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] transition-opacity duration-500 group-hover:opacity-100"
+          className="absolute right-4 top-4 h-8 w-8 opacity-70 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100"
+          decorative
         />
       </div>
 
@@ -93,8 +100,13 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
           </span>
         </div>
 
-        <Heading className="display display-sm mt-4 text-paper transition-colors duration-300 group-hover:text-cyan-hi">
-          {item.title}
+        <Heading className="display display-sm mt-4 text-paper transition-colors duration-300 group-hover:text-cyan-hi group-focus-within:text-cyan-hi">
+          <Link
+            href={`/work/${item.slug}`}
+            className="after:absolute after:inset-0 after:content-['']"
+          >
+            {item.title}
+          </Link>
         </Heading>
 
         <p className="mt-3 flex-1 text-sm leading-relaxed text-paper-dim">{item.summary}</p>
@@ -107,13 +119,14 @@ export function WorkCard({ item, index = 0, headingLevel = 3 }: Props) {
               </span>
             ))}
           </div>
-          <span className="mono shrink-0 text-cyan-hi opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <span className="arrow" aria-hidden>
-              →
-            </span>
+          <span
+            className="mono shrink-0 text-cyan-hi opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+            aria-hidden
+          >
+            <span className="arrow">→</span>
           </span>
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

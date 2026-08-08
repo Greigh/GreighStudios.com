@@ -12,10 +12,16 @@ type Props = {
   className?: string;
   y?: number;
   delay?: number;
+  /**
+   * The wrapper element. Defaults to a div, but a Reveal placed directly
+   * inside a <ul> has to render the <li> itself — an intervening div breaks
+   * the list out of its own semantics and screen readers stop counting items.
+   */
+  as?: "div" | "li";
 };
 
-export function Reveal({ children, className = "", y = 28, delay = 0 }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
+export function Reveal({ children, className = "", y = 28, delay = 0, as: Tag = "div" }: Props) {
+  const ref = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
@@ -42,8 +48,8 @@ export function Reveal({ children, className = "", y = 28, delay = 0 }: Props) {
   );
 
   return (
-    <div ref={ref} className={className}>
+    <Tag ref={ref as React.Ref<HTMLDivElement & HTMLLIElement>} className={className}>
       {children}
-    </div>
+    </Tag>
   );
 }

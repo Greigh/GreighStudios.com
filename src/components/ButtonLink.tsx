@@ -15,6 +15,9 @@ export function ButtonLink({ href, children, variant = "primary", className = ""
     return (
       <a href={href} className={classNames} target="_blank" rel="noopener noreferrer">
         {children}
+        {/* A new tab with no warning is disorienting for screen reader and
+            magnifier users, who get no visual cue that the context changed. */}
+        <span className="sr-only"> (opens in a new tab)</span>
       </a>
     );
   }

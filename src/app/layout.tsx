@@ -97,7 +97,10 @@ export default function RootLayout({
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" className="flex-1">
+        {/* tabindex="-1" is what makes the skip link actually work: without it
+            Safari (and others) move the scroll position but leave focus at the
+            top of the document, so the next Tab lands back in the header. */}
+        <main id="main" tabIndex={-1} className="flex-1">
           {children}
         </main>
         <SiteFooter />

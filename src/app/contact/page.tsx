@@ -29,7 +29,7 @@ export default function ContactPage() {
         <div className="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <Reveal>
             <div className="lg:sticky lg:top-28">
-              <p className="eyebrow">What to expect</p>
+              <h2 className="eyebrow">What to expect</h2>
               <dl className="mt-6 border-t border-line-soft">
                 {expect.map((item) => (
                   <div key={item.label} className="border-b border-line-soft py-4">
@@ -41,7 +41,7 @@ export default function ContactPage() {
 
               <p className="mt-8 text-sm text-paper-dim">
                 Prefer email?{" "}
-                <a href={`mailto:${site.email}`} className="text-cyan-hi hover:underline">
+                <a href={`mailto:${site.email}`} className="link-inline">
                   {site.email}
                 </a>
               </p>

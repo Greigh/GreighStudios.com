@@ -50,19 +50,25 @@ export default function HomePage() {
             />
           </Reveal>
 
+          {/* Reveal renders the <li> itself — a wrapper div between the list
+              and its items breaks the list out of its own semantics, and the
+              item count stops being announced. */}
           <ul className="mt-12 border-t border-line-soft">
             {capabilities.map((item, i) => (
-              <Reveal key={item.title} delay={i * 0.05}>
-                <li className="group grid gap-2 border-b border-line-soft py-7 md:grid-cols-[minmax(0,20rem)_1fr] md:items-baseline md:gap-10">
-                  <div className="flex items-baseline gap-3">
-                    <span
-                      className="mt-2 h-1.5 w-1.5 shrink-0 bg-cyan opacity-50 transition-opacity duration-300 group-hover:opacity-100"
-                      aria-hidden
-                    />
-                    <h3 className="display display-sm text-paper">{item.title}</h3>
-                  </div>
-                  <p className="text-paper-dim md:pt-1">{item.body}</p>
-                </li>
+              <Reveal
+                key={item.title}
+                as="li"
+                delay={i * 0.05}
+                className="group grid gap-2 border-b border-line-soft py-7 md:grid-cols-[minmax(0,20rem)_1fr] md:items-baseline md:gap-10"
+              >
+                <div className="flex items-baseline gap-3">
+                  <span
+                    className="mt-2 h-1.5 w-1.5 shrink-0 bg-cyan opacity-50 transition-opacity duration-300 group-hover:opacity-100"
+                    aria-hidden
+                  />
+                  <h3 className="display display-sm text-paper">{item.title}</h3>
+                </div>
+                <p className="text-paper-dim md:pt-1">{item.body}</p>
               </Reveal>
             ))}
           </ul>
@@ -91,7 +97,9 @@ export default function HomePage() {
             <div className="surface relative overflow-hidden rounded-sm p-8">
               <div className="cell-texture absolute inset-0 opacity-30" aria-hidden />
               <div className="relative">
-                <p className="eyebrow">In the studio now</p>
+                {/* Reads as a heading, so it is one — this panel was
+                    previously invisible to heading navigation. */}
+                <h3 className="eyebrow">In the studio now</h3>
                 <ul className="mt-6 divide-y divide-line-soft border-y border-line-soft">
                   {featured.map((item) => (
                     <li key={item.slug}>

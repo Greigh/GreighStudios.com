@@ -112,7 +112,8 @@ export default function AboutPage() {
                     rel="noopener noreferrer"
                     className="group text-sm text-cyan-hi hover:text-paper"
                   >
-                    GitHub{" "}
+                    GitHub
+                    <span className="sr-only"> (opens in a new tab)</span>{" "}
                     <span className="arrow" aria-hidden>
                       →
                     </span>
@@ -135,7 +136,10 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <SectionHead eyebrow="Who it’s for" title="One accountable person, not a chain of handoffs" />
+            <SectionHead
+              eyebrow="Who it’s for"
+              title="One accountable person, not a chain of handoffs"
+            />
             <p className="lede mt-6">
               Founders and teams who want one person owning both the product surface and the
               implementation — without the translation loss of split agencies.

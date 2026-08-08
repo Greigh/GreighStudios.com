@@ -172,9 +172,9 @@ export default async function WorkDetailPage({ params }: Props) {
                   <div className="surface flex h-full flex-col justify-between gap-8 rounded-sm p-8">
                     <div>
                       <p className="eyebrow">Working on something?</p>
-                      <p className="display display-sm mt-4 text-paper">
+                      <h3 className="display display-sm mt-4 text-paper">
                         Tell us what you’re building
-                      </p>
+                      </h3>
                       <p className="mt-3 text-sm leading-relaxed text-paper-dim">
                         Studio products and client work run through the same team. Send the problem,
                         the timeline, and what success looks like.

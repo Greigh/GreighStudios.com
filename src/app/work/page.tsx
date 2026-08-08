@@ -38,7 +38,7 @@ export default function WorkPage() {
             <div className="surface mt-6 flex flex-col items-start gap-5 rounded-sm p-8 md:flex-row md:items-center md:justify-between md:p-10">
               <div>
                 <p className="eyebrow">Next</p>
-                <p className="display display-sm mt-3 text-paper">More is on the way</p>
+                <h2 className="display display-sm mt-3 text-paper">More is on the way</h2>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-paper-dim">
                   New studio products and client case studies get published here as they ship.
                 </p>
