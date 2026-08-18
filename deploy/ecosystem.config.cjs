@@ -7,7 +7,10 @@ module.exports = {
       name: "greigh-studios",
       cwd: "/var/www/greighstudios.com",
       script: "node_modules/next/dist/bin/next",
-      args: "start -p 3010",
+      // -H is load-bearing: `next start` reads HOSTNAME, not HOST, so the env
+      // block below was never binding this to loopback — ss showed it on
+      // *:3010. Only ufw's default-deny was keeping it off the internet.
+      args: "start -p 3010 -H 127.0.0.1",
       instances: 1,
       exec_mode: "fork",
       autorestart: true,
@@ -16,7 +19,7 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         PORT: 3010,
-        HOST: "127.0.0.1",
+        HOSTNAME: "127.0.0.1",
         TZ: "America/New_York",
       },
       error_file: "/var/www/greighstudios.com/logs/err.log",

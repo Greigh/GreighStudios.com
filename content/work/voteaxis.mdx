@@ -1,0 +1,34 @@
+---
+title: Voteaxis
+summary: A civic quiz app that places you on a liberal↔conservative axis and ranks the presidents and politicians closest to your actual positions.
+category: product
+year: "2026"
+status: in-progress
+url: https://voteaxis.org
+tags: [Product, Civic Tech, Mobile, iOS, Android, Flutter]
+featured: true
+---
+
+## Overview
+
+Voteaxis is a Greigh Studios product. You answer a short quiz on the issues that actually matter to you, land on a liberal↔conservative axis, and see which American presidents and sitting politicians stand closest — and, more usefully, where you diverge from them.
+
+The quiz is a native mobile experience on iOS and Android. The site is the brand and waitlist surface: an interactive spectrum preview, a plain-language methodology page, and a way in at launch. There is deliberately no in-browser quiz.
+
+## Problem
+
+Political placement tools have a credibility problem. Most run on a black-box score, treat every question as equally important, and stop at a coloured dot on a chart. Nobody weights immigration the same as tax policy, and a result you can't interrogate is a result you can't trust — or argue with.
+
+## Approach
+
+- **Our own scoring method.** The Spectrum Issue Index (SII) v1 maps five-point Likert answers onto 22 issues across five pillars — economy & fiscal, rights & society, health & entitlements, justice & homeland, and climate, energy & world. It is our method, not a licensed third-party ideology score, and it is documented publicly rather than asserted.
+- **Importance is an input, not a footnote.** Every question carries its own weight, from Low to Essential, and you can flag up to three dealbreakers. Two people with identical answers can land in different places, which is the point.
+- **Show the work.** Match results open into side-by-side issue comparisons, stance cards, agree/disagree highlights, confidence tags, and — for members of Congress — actual voting receipts.
+- **Own the data pipeline.** ProPublica's Congress API was retired mid-build, so receipts now come from a self-hosted REST API indexed from BICAM, with roll-call votes precomputed off the VoteView tape. No vendor sits between a claim and its source.
+- **Flutter for the app, Next.js for the brand,** with a small Bun API on a VPS handling friend codes and receipts. The API never scores anything — placement stays on-device.
+
+## Outcome
+
+The methodology is settled, the catalog is built — roughly 34 curated figures across 22 issues and 25 Likert items — and the app runs end to end: onboarding, save-and-resume quiz, results, politician pages, comparing runs against a friend by six-digit code, share cards, and a home-screen Issue of the Day widget.
+
+The marketing site is live and taking waitlist signups. The apps are pre-launch; store links and launch numbers land here when they ship.

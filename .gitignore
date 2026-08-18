@@ -48,8 +48,9 @@ next-env.d.ts
 
 # AI Helpers
 .claude
-CLAUDE.md
-AGENTS.md
+# CLAUDE.md / AGENTS.md are intentionally tracked: next dev regenerates
+# AGENTS.md on every run, so committing it is what keeps the tree clean.
+# They were listed here but already in the index, so the rule did nothing.
 
 # Brand Assets
 /brand-assets
