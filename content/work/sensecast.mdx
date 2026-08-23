@@ -1,0 +1,36 @@
+---
+title: Sensecast
+summary: A weather app that translates atmospheric physics into how the air will actually feel, and cross-checks 43 forecast sources against each other.
+category: product
+year: "2026"
+status: in-progress
+tags: [Product, Weather, Data, Mobile, iOS, Android, Flutter]
+featured: true
+---
+
+## Overview
+
+Sensecast is a Greigh Studios product. It reads live conditions from 43 weather sources — including the authoritative national agencies of 33 countries — and reports not just the numbers but what they do to a person standing outside in them.
+
+It runs on iOS, Android, macOS and the web from a single Flutter codebase, with native extensions where the platform rewards them: a live temperature glyph drawn into the Android status bar, home and lock screen widgets on both mobile platforms, and a desktop menu bar item.
+
+## Problem
+
+Weather apps are confident and opaque in equal measure. They show one forecast without saying whose it is, so the user has no way to know whether the models actually agree. And they report the atmosphere in units — 64°F dew point, 180° wind, 7 UV — that describe physics accurately and human experience not at all.
+
+Both failures have the same shape: the app knows something it declines to explain.
+
+## Approach
+
+- **Say who is forecasting.** A comparison matrix puts NOAA, ECMWF, DWD, Environment Canada, JMA and the UK Met Office side by side, computes a consensus mean, and marks each model's variance from it. Disagreement between models is information, so we show it instead of averaging it away.
+- **Route to the local authority by default.** Rather than pushing one global model everywhere, the smart-routing engine detects location and hands off to the agency that actually models that terrain — MET Norway for fjords, HKO for typhoons, Météo-France's 1.3km AROME grid for Western Europe.
+- **Translate every metric into a sensation.** Dew point becomes crisp, muggy, or tropical. Wind becomes a direction and a Beaufort description. "Feels like" always states its own cause — humidity making it warmer, wind making it cooler — rather than presenting a second number with no provenance.
+- **Teach on tap, and let it be dismissed.** Any metric opens an explanation, with the physics collapsed underneath the plain-language version. A standalone Weather Academy collects the same material, and a single switch turns all of it off permanently for users who don't want it.
+- **Render the weather, don't illustrate it.** The background is a physics-based particle canvas — rain with splash rings, drifting cloud layers, lightning, starfields — synchronised to the actual solar elevation at the user's coordinates. Users who find that busy can choose a flat or OLED-black style instead.
+- **Free data, no key required.** 38 of the 43 providers are government open data. The app is fully usable without an account or a paid tier; commercial providers are opt-in with a user-supplied key.
+
+## Outcome
+
+The app is feature-complete at 1.0 and running end to end on all four platforms — dashboard, drag-and-drop card ordering, animated Doppler radar with a dBZ legend, air quality, pollen, aurora Kp index, and the full set of home and lock screen widgets. Units cover every major world standard, down to Kelvin and Beaufort.
+
+Deployment tooling for Google Play and TestFlight is wired up and the test suite runs in CI. It is pre-launch; store links land here when it ships.
