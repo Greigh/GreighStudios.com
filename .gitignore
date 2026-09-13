@@ -56,3 +56,22 @@ next-env.d.ts
 /brand-assets
 # Local-only maintainer runbook (contains infra details)
 deploy/PROVISION.md
+
+# Forgejo & server deployment secrets / artifacts
+app.ini
+*/app.ini
+!*.template
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+*.key
+*.csr
+*.crt
+*.p12
+*.pfx
+forgejo-backup-*
+deploy/forgejo/backups/
+*.dump
+

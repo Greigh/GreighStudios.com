@@ -1,0 +1,71 @@
+APP_NAME = Greigh Studios Git
+RUN_USER = git
+RUN_MODE = prod
+WORK_PATH = /var/lib/forgejo
+
+[repository]
+ROOT = /var/lib/forgejo/repositories
+DEFAULT_BRANCH = main
+ENABLE_PUSH_CREATE_USER = true
+ENABLE_PUSH_CREATE_ORG = true
+
+[server]
+PROTOCOL         = http
+DOMAIN           = git.greighstudios.com
+ROOT_URL         = https://git.greighstudios.com
+HTTP_ADDR        = 127.0.0.1
+HTTP_PORT        = 3030
+SSH_DOMAIN       = git.greighstudios.com
+SSH_PORT         = 22
+DISABLE_SSH      = false
+START_SSH_SERVER = false
+OFFLINE_MODE     = false
+LFS_START_SERVER = true
+APP_DATA_PATH    = /var/lib/forgejo/data
+
+[lfs]
+PATH = /var/lib/forgejo/data/lfs
+
+[database]
+DB_TYPE  = sqlite3
+PATH     = /var/lib/forgejo/data/forgejo.db
+
+[session]
+PROVIDER = memory
+
+[log]
+MODE      = file
+LEVEL     = info
+ROOT_PATH = /var/log/forgejo
+
+[security]
+REVERSE_PROXY_TRUSTED_PROXIES = *
+INSTALL_LOCK   = true
+SECRET_KEY     = REPLACE_WITH_SECRET_KEY
+INTERNAL_TOKEN = REPLACE_WITH_INTERNAL_TOKEN
+
+[cache]
+ADAPTER  = twoqueue
+HOST     = {"size":100, "recent_ratio":0.25, "ghost_ratio":0.5}
+INTERVAL = 60
+
+[mailer]
+ENABLED        = true
+SMTP_ADDR      = 127.0.0.1
+SMTP_PORT      = 25
+FROM           = "Greigh Studios Git" <hello@greighstudios.com>
+
+[service]
+REGISTER_EMAIL_CONFIRM            = false
+ENABLE_NOTIFY_MAIL               = true
+DISABLE_REGISTRATION              = true
+ALLOW_ONLY_EXTERNAL_REGISTRATION = false
+ENABLE_CAPTCHA                    = true
+REQUIRE_SIGNIN_VIEW               = false
+DEFAULT_KEEP_EMAIL_PRIVATE        = true
+DEFAULT_ALLOW_CREATE_ORGANIZATION = true
+DEFAULT_ENABLE_TIMETRACKING       = true
+NO_REPLY_ADDRESS                  = noreply.git.greighstudios.com
+
+[ui]
+DEFAULT_THEME = forgejo-auto

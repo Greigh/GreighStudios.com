@@ -68,6 +68,17 @@ Deploy configuration and secrets live in `deploy/.env.deploy`, and first-time
 server/DNS/TLS/mailbox setup in `deploy/PROVISION.md` — both kept out of version
 control. Contact the maintainer for provisioning details.
 
+### Self-Hosted Forgejo Git
+
+The studio's self-hosted Git instance runs Forgejo at [git.greighstudios.com](https://git.greighstudios.com).
+Provisioning scripts and service definitions are located in `deploy/forgejo/`:
+
+```bash
+./deploy/forgejo/install-forgejo.sh
+```
+
+See [`deploy/forgejo/PROVISION-FORGEJO.md`](deploy/forgejo/PROVISION-FORGEJO.md) for the complete runbook.
+
 ## License
 
 **Greigh Studios Source Available License v1.0** — see [LICENSE](LICENSE).

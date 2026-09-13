@@ -1,0 +1,23 @@
+[Unit]
+Description=Forgejo (Beyond coding. We forge.)
+After=network.target
+
+[Service]
+RestartSec=2s
+Type=simple
+User=git
+Group=git
+WorkingDirectory=/var/lib/forgejo
+ExecStart=/usr/local/bin/forgejo web --config /etc/forgejo/app.ini
+Restart=always
+Environment=USER=git HOME=/var/lib/forgejo FORGEJO_WORK_DIR=/var/lib/forgejo GITEA_WORK_DIR=/var/lib/forgejo
+
+# Sandboxing & security capabilities
+LimitNOFILE=65535
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/var/lib/forgejo /var/log/forgejo /etc/forgejo
+
+[Install]
+WantedBy=multi-user.target
