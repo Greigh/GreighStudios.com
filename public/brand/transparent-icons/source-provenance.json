@@ -1,0 +1,10 @@
+{
+  "originalContainer": "brand-assets/mark-source.svg",
+  "originalContainerTracked": false,
+  "embeddedPngSize": { "width": 16350, "height": 14473 },
+  "crop": { "left": 0, "top": 0, "width": 9660, "height": 11295 },
+  "masterHeight": 4096,
+  "resizeKernel": "lanczos3",
+  "masterFile": "source-artwork.png",
+  "preparation": "Extract the original embedded PNG, retain the complete main mark and detached pixel cluster, exclude distant low-opacity canvas dust, and reduce the crop to a 4096-pixel-high transparent master."
+}

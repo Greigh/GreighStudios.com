@@ -1,0 +1,13 @@
+{
+  "file": "greigh-studios-google-play-header-4096x2304.jpg",
+  "width": 4096,
+  "height": 2304,
+  "format": "jpeg",
+  "bytes": 387288,
+  "byteLimit": 1000000,
+  "jpegQuality": 80,
+  "channels": 3,
+  "sourceWidth": 1672,
+  "sourceHeight": 941,
+  "generatedWith": "Built-in image_gen tool"
+}

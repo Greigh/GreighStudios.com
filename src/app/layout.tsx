@@ -60,13 +60,6 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   ...createMetadata(),
-  icons: {
-    icon: [
-      { url: "/brand/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/brand/mark.png", sizes: "2048x2048", type: "image/png" },
-    ],
-    apple: "/brand/apple-touch-icon.png",
-  },
   applicationName: site.name,
 };
 
