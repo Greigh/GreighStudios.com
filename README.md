@@ -93,6 +93,11 @@ The official web application and portfolio showcase for **Greigh Studios LLC** �
 │       └── custom/                # Studio custom branding (logos, icons, portal templates)
 ├── public/                        # Static assets (brand marks, icons, fonts)
 │   └── brand/                     # Official brand artwork (mark, favicons, touch icons)
+│       ├── icons/                 # Opaque icon family, source artwork, and download bundle
+│       └── transparent-icons/     # Original transparent mark in matching export sizes
+├── scripts/
+│   ├── export-brand-icons.mjs     # Rebuild background icon sizes and platform formats
+│   └── export-transparent-icons.mjs # Rebuild transparent icon sizes and platform formats
 ├── src/
 │   ├── app/                       # Next.js App Router pages and layouts
 │   │   ├── api/contact/           # Contact form SMTP endpoint
@@ -103,6 +108,27 @@ The official web application and portfolio showcase for **Greigh Studios LLC** �
 │   └── lib/                       # Site configuration, MDX loaders, and SEO utilities
 └── deploy.sh                      # One-command production deployment script
 ```
+
+---
+
+## Brand Icons
+
+The background icon uses the studio's silver and cyan mark over a navy surface with cyan and violet light. The full export family, including PNG sizes from 16 to 2048 pixels, JPEG, WebP, a multi-resolution ICO, and a macOS ICNS, lives in [`public/brand/icons/`](public/brand/icons/README.md). Download all files in [`greigh-studios-icons.zip`](public/brand/icons/greigh-studios-icons.zip).
+
+The original transparent mark has 34 square PNG sizes from 16 to 4096 pixels in [`public/brand/transparent-icons/`](public/brand/transparent-icons/README.md), with transparent WebP, ICO, and ICNS versions. Download [`greigh-studios-transparent-icons.zip`](public/brand/transparent-icons/greigh-studios-transparent-icons.zip). These exports preserve the original mark's proportions and use transparent padding to fit square canvases. A saved 4096-pixel master derived from the larger original artwork allows every included size to be exported without upscaling.
+
+The website uses Next.js file metadata (`src/app/icon.png`, `src/app/favicon.ico`, and `src/app/apple-icon.png`). Matching assets are included in the Forgejo customization directory. The transparent artwork in `public/brand/mark.png` remains the source for inline brand marks and organization structured data.
+
+To regenerate the exports from the saved artwork:
+
+```bash
+node scripts/export-brand-icons.mjs
+node scripts/export-transparent-icons.mjs
+```
+
+The built-in image generator produced the 1254×1254 background artwork. Its 1536 and 2048 pixel exports are resampled from that source; all smaller background exports are resized directly from it.
+
+The text-free atmospheric [Google Play developer header](public/brand/google-play-header/README.md) is available as a [4096×2304 JPEG](public/brand/google-play-header/greigh-studios-google-play-header-4096x2304.jpg) below 1 MB. Its folder also contains the selected source artwork, generation brief, and exact export details. Regenerate the upload file with `node scripts/export-google-play-header.mjs`.
 
 ---
 
@@ -140,7 +166,7 @@ The studio runs an internal, hardened **Forgejo** forge instance for version con
 - **Runbook:** [`deploy/forgejo/PROVISION-FORGEJO.md`](deploy/forgejo/PROVISION-FORGEJO.md)
 - **Installer / Upgrade:** `./deploy/forgejo/install-forgejo.sh`
 - **Security:** Public self-registration is permanently disabled (`DISABLE_REGISTRATION = true`); all contributor accounts are provisioned exclusively by studio administrators.
-- **Branding:** Custom studio portal home page, multi-resolution favicons, and vector brand marks in `deploy/forgejo/custom/`.
+- **Branding:** Custom studio portal home page, multi-resolution background icons, and transparent brand marks in `deploy/forgejo/custom/`.
 - **SSH Git Access:** Passthrough on port `22` (`git@git.greighstudios.com:...`).
 
 ### 3. Studio Repositories Hosted on Forgejo
