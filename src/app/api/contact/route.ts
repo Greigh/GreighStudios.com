@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import nodemailer, { type Transporter } from "nodemailer";
 import { site } from "@/lib/site";
 
 export const runtime = "nodejs";
@@ -18,7 +18,7 @@ function isEmail(value: string) {
 
 // One transport per server process. Config comes from the environment so no
 // mailbox credentials live in the repo.
-let cachedTransport: nodemailer.Transporter | null = null;
+let cachedTransport: Transporter | null = null;
 
 function getTransport() {
   const host = process.env.SMTP_HOST;
