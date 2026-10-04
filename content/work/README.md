@@ -7,7 +7,7 @@ is why this reference is a `.md` and never appears on the site.
 
 ## Full frontmatter example
 
-Every field the site reads, with the two optional ones included:
+Every field the site reads, with the optional ones included:
 
 ```mdx
 ---
@@ -17,6 +17,8 @@ category: product
 year: "2026"
 status: in-progress
 url: https://voteaxis.org
+googlePlay: https://play.google.com/store/apps/details?id=com.greighstudios.sensecast
+appStore: https://apps.apple.com/us/app/sensecast-weather-radar/id6804491112
 image: /work/voteaxis.webp
 tags: [Product, Civic Tech, Mobile, iOS, Android, Flutter]
 featured: true
@@ -33,6 +35,8 @@ featured: true
 | `year`     | yes      | string, quoted                          | **Quote it** — YAML would otherwise parse it as a number. Sorting is `Number(b.year) - Number(a.year)`, so it must stay numeric-looking. Also drawn as the giant watermark on image-less cards. |
 | `status`   | yes      | `live` \| `in-progress` \| `archived`   | Defaults to `live`. Only `live` gets the cyan status dot; the other two render grey. |
 | `url`      | no       | absolute URL                            | Omit and the "Visit live site" button is not rendered. Include the scheme. |
+| `googlePlay` | no     | absolute URL                            | Omit and the "Google Play" button is not rendered. Renders next to "Visit live site" on the detail page; all the link buttons wrap in one row. Include the scheme. |
+| `appStore` | no       | absolute URL                            | Omit and the "App Store" button is not rendered. Same button row as `googlePlay` and `url`. Include the scheme. |
 | `image`    | no       | path under `public/`                    | Omit and the card falls back to the `DissolveField` motif with the year watermark — a deliberate, finished-looking state, not a gap. Supply one and it renders both as the card plate (`object-cover object-top`) and as the full-width hero, so use a ~1600×900 `.webp` in `public/work/`. |
 | `tags`     | yes      | string array                            | All of them render as chips on the card. **The last tag is reused on its own as the "Stack" cell** of the detail-page fact row — so end the list with the primary technology, not an incidental one. |
 | `featured` | no       | boolean                                 | Controls the home page. If no entry is featured, the two most recent are used instead. |

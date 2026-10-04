@@ -108,14 +108,32 @@ export default async function WorkDetailPage({ params }: Props) {
             </div>
           </dl>
 
-          {meta.url ? (
-            <div className="mt-8">
-              <ButtonLink href={meta.url} variant="ghost">
-                Visit live site{" "}
-                <span className="arrow" aria-hidden>
-                  →
-                </span>
-              </ButtonLink>
+          {meta.url || meta.googlePlay || meta.appStore ? (
+            <div className="mt-8 flex flex-wrap gap-3">
+              {meta.url ? (
+                <ButtonLink href={meta.url} variant="ghost">
+                  Visit live site{" "}
+                  <span className="arrow" aria-hidden>
+                    →
+                  </span>
+                </ButtonLink>
+              ) : null}
+              {meta.googlePlay ? (
+                <ButtonLink href={meta.googlePlay} variant="ghost">
+                  Google Play{" "}
+                  <span className="arrow" aria-hidden>
+                    →
+                  </span>
+                </ButtonLink>
+              ) : null}
+              {meta.appStore ? (
+                <ButtonLink href={meta.appStore} variant="ghost">
+                  App Store{" "}
+                  <span className="arrow" aria-hidden>
+                    →
+                  </span>
+                </ButtonLink>
+              ) : null}
             </div>
           ) : null}
         </div>
