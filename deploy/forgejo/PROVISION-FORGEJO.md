@@ -127,6 +127,36 @@ If you change any of the branding images:
    ssh root@<VPS_IP> "rm -rf /var/cache/nginx/forgejo/* && systemctl reload nginx"
    ```
 
+### Custom Templates & Public-Facing Layout
+
+Template overrides are committed in `deploy/forgejo/custom/templates/` and deployed to `/var/lib/forgejo/custom/templates/` by `install-forgejo.sh`:
+
+- `templates/home.tmpl` — custom portal landing page. Currently bypassed for anonymous visitors by `LANDING_PAGE = /greighstudios` (see below); kept as a fallback.
+- `templates/base/head_navbar.tmpl` — navbar renders **only for signed-in users**; the Explore and Help links are removed.
+- `templates/custom/header.tmpl` — favicon/apple-touch `<link>` tags.
+- `templates/custom/extra_links_footer.tmpl` — footer links, including a Sign in link shown only to anonymous visitors.
+
+Instance behavior configured in `app.ini` (mirrored in `app.ini.template` and the `install-forgejo.sh` heredoc):
+
+```ini
+[server]
+LANDING_PAGE = /greighstudios   # anonymous visitors hitting / redirect to the org page
+
+[service.explore]
+REQUIRE_SIGNIN_VIEW        = true   # /explore/* requires login — invisible to the public
+DISABLE_USERS_PAGE         = true
+DISABLE_ORGANIZATIONS_PAGE = true
+DISABLE_CODE_PAGE          = true
+```
+
+Note: `install-forgejo.sh` only writes `/etc/forgejo/app.ini` on first install. To change settings on the live instance, edit `/etc/forgejo/app.ini` on the VPS directly and `systemctl restart forgejo`.
+
+Template changes take effect after copying the files and restarting the service:
+```bash
+scp -r deploy/forgejo/custom root@<VPS_IP>:/var/lib/forgejo/
+ssh root@<VPS_IP> "chown -R git:git /var/lib/forgejo/custom && systemctl restart forgejo"
+```
+
 ---
 
 ## 6. Backups and Restores

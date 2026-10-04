@@ -1,2 +1,3 @@
 <a class="item" target="_blank" rel="noopener noreferrer" href="https://greighstudios.com">Greigh Studios</a>
 <a class="item" href="{{AppSubUrl}}/greighstudios">@greighstudios</a>
+{{if not .IsSigned}}<a class="item" rel="nofollow" href="{{AppSubUrl}}/user/login{{if not .PageIsSignIn}}?redirect_to={{.CurrentURL}}{{end}}">{{ctx.Locale.Tr "sign_in"}}</a>{{end}}

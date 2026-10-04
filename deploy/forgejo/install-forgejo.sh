@@ -136,6 +136,7 @@ START_SSH_SERVER = false
 OFFLINE_MODE     = false
 LFS_START_SERVER = true
 APP_DATA_PATH    = /var/lib/forgejo/data
+LANDING_PAGE     = /greighstudios
 
 [lfs]
 PATH = /var/lib/forgejo/data/lfs
@@ -183,6 +184,12 @@ DEFAULT_KEEP_EMAIL_PRIVATE        = true
 DEFAULT_ALLOW_CREATE_ORGANIZATION = true
 DEFAULT_ENABLE_TIMETRACKING       = true
 NO_REPLY_ADDRESS                  = noreply.git.greighstudios.com
+
+[service.explore]
+REQUIRE_SIGNIN_VIEW        = true
+DISABLE_USERS_PAGE         = true
+DISABLE_ORGANIZATIONS_PAGE = true
+DISABLE_CODE_PAGE          = true
 
 [ui]
 DEFAULT_THEME = forgejo-auto
