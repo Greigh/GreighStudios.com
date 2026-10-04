@@ -70,7 +70,7 @@ chmod 700 /var/lib/forgejo/.ssh
 EOF
 
 echo "=== [2/7] Installing / Updating Forgejo Binary ==="
-FORGEJO_VERSION="${FORGEJO_VERSION:-16.0.4}"
+FORGEJO_VERSION="${FORGEJO_VERSION:-16.0.5}"
 DOWNLOAD_URL="https://codeberg.org/forgejo/forgejo/releases/download/v${FORGEJO_VERSION}/forgejo-${FORGEJO_VERSION}-linux-amd64"
 
 remote "bash -s" << EOF
@@ -83,8 +83,20 @@ fi
 echo "Current binary: \$CURRENT_VER"
 if [[ "\$CURRENT_VER" != *"$FORGEJO_VERSION"* ]]; then
   echo "Downloading Forgejo v$FORGEJO_VERSION..."
-  curl -fsSL -o /usr/local/bin/forgejo "$DOWNLOAD_URL"
-  chmod +x /usr/local/bin/forgejo
+  # Download to a temp dir and verify BEFORE touching the live binary — a failed
+  # or partial curl must never truncate /usr/local/bin/forgejo (that put the
+  # service into an exec-format-error crash loop on 2026-10-04).
+  DL_DIR=\$(mktemp -d /tmp/forgejo-dl.XXXXXX)
+  trap 'rm -rf "\$DL_DIR"' EXIT
+  curl -fsSL --retry 3 -o "\$DL_DIR/forgejo-${FORGEJO_VERSION}-linux-amd64" "$DOWNLOAD_URL"
+  curl -fsSL --retry 3 -o "\$DL_DIR/forgejo-${FORGEJO_VERSION}-linux-amd64.sha256" "$DOWNLOAD_URL.sha256"
+  (cd "\$DL_DIR" && sha256sum -c "forgejo-${FORGEJO_VERSION}-linux-amd64.sha256")
+  file "\$DL_DIR/forgejo-${FORGEJO_VERSION}-linux-amd64" | grep -q "ELF 64-bit" || {
+    echo "❌ Downloaded file is not a valid ELF binary — aborting, live binary untouched"
+    exit 1
+  }
+  install -o root -g root -m 755 "\$DL_DIR/forgejo-${FORGEJO_VERSION}-linux-amd64" /usr/local/bin/forgejo
+  rm -rf "\$DL_DIR"
   echo "Forgejo binary installed: \$(/usr/local/bin/forgejo --version)"
 else
   echo "Forgejo v$FORGEJO_VERSION is already installed."

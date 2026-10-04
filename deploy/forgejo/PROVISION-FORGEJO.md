@@ -32,7 +32,7 @@ To install Forgejo or upgrade it to the latest version, run from your local repo
 To specify a specific release version:
 
 ```bash
-FORGEJO_VERSION="16.0.4" ./deploy/forgejo/install-forgejo.sh
+FORGEJO_VERSION="16.0.5" ./deploy/forgejo/install-forgejo.sh
 ```
 
 ---
